@@ -9,6 +9,22 @@ def index(request):
 
 
 @csrf_exempt
+def get_windows(request):
+    post_content = request.POST
+    dataset = post_content.get("data_set")
+    print(dataset)
+    data_size = 130
+    if dataset == "NAB":
+        data_size = 160
+    window_size = 12
+    retval = {
+        "data_size": data_size,
+        "window_size": window_size
+    }
+    return HttpResponse(json.dumps(retval))
+
+
+@csrf_exempt
 def get_data(request):
     # AJAX with vue
     # post_content = json.loads(request.body)
@@ -20,8 +36,10 @@ def get_data(request):
     post_content = request.POST
     algorithm = post_content.get("algorithm")
     dataset = post_content.get("dataset")
+    windows = post_content.getlist("windows")
 
     print(algorithm + " / " + dataset)
+    print(windows)
 
     data_set = []
     original_anomaly = []
@@ -76,3 +94,4 @@ def get_data(request):
     }
 
     return HttpResponse(json.dumps(retval))
+

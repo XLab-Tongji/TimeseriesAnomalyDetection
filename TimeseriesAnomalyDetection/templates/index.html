@@ -45,14 +45,30 @@
                                 <span>请选择数据集</span>
                             </template>
                             <template>
-                                <div class="item-title">
-                                    &nbsp; &nbsp;
-                                    <el-radio v-model="data_sel" label="YAHOO">YAHOO</el-radio>
-                                </div>
-                                <div class="item-title">
-                                    &nbsp; &nbsp;
-                                    <el-radio v-model="data_sel" label="NAB">NAB</el-radio>
-                                </div>
+                                <el-radio-group v-model="data_sel" @change="loadWindows">
+                                    <div class="item-title">
+                                        &nbsp; &nbsp;
+                                        <el-radio label="YAHOO">YAHOO</el-radio>
+                                    </div>
+                                    <div class="item-title">
+                                        &nbsp; &nbsp;
+                                        <el-radio label="NAB">NAB</el-radio>
+                                    </div>
+                                </el-radio-group>
+                            </template>
+                        </el-collapse-item>
+                        <el-collapse-item name="3">
+                            <template slot="title">
+                                <i class="header-icon el-icon-data-analysis"></i> &nbsp;
+                                <span>请选择数据段</span>
+                            </template>
+                            <template>
+                                <el-checkbox-group v-model="windows_sel">
+                                    <div v-for="(item, index) in window_series" class="item-title" >
+                                        &nbsp; &nbsp;
+                                        <el-checkbox :label="index">数据段区间[[ item.start ]],&nbsp;[[ item.end ]]</el-checkbox>
+                                    </div>
+                                </el-checkbox-group>
                             </template>
                         </el-collapse-item>
                     </el-collapse>
@@ -85,48 +101,48 @@
         var myChart = echarts.init(document.getElementById('echart'));
         var mark_area = [];
         var curOriPos = 0, curDetPos = 0;
-        console.log(window.index_page);
-        for (var i = 0; i < window.index_page.chartPoint.length; i++) {
-            while (curOriPos < window.index_page.originalAnomaly.length &&
-            window.index_page.originalAnomaly[curOriPos] < window.index_page.chartPoint[i][0]) {
+        console.log(index_page);
+        for (var i = 0; i < index_page.chartPoint.length; i++) {
+            while (curOriPos < index_page.originalAnomaly.length &&
+            index_page.originalAnomaly[curOriPos] < index_page.chartPoint[i][0]) {
                 curOriPos++;
             }
-            while (curDetPos < window.index_page.detectedAnomaly.length &&
-            window.index_page.detectedAnomaly[curDetPos] < window.index_page.chartPoint[i][0]) {
+            while (curDetPos < index_page.detectedAnomaly.length &&
+            index_page.detectedAnomaly[curDetPos] < index_page.chartPoint[i][0]) {
                 curDetPos++;
             }
-            if (window.index_page.originalAnomaly[curOriPos] == window.index_page.chartPoint[i][0]) {
-                if (window.index_page.detectedAnomaly[curDetPos] == window.index_page.chartPoint[i][0]) {
+            if (index_page.originalAnomaly[curOriPos] == index_page.chartPoint[i][0]) {
+                if (index_page.detectedAnomaly[curDetPos] == index_page.chartPoint[i][0]) {
                     mark_area.push([{
-                        xAxis: window.index_page.chartPoint[i][0] - 0.5,
+                        xAxis: index_page.chartPoint[i][0] - 0.5,
                         itemStyle: {color: 'rgba(144, 238, 144, 0.5)',}
                     }, {
-                        xAxis: window.index_page.chartPoint[i][0] + 0.5,
+                        xAxis: index_page.chartPoint[i][0] + 0.5,
                     }]);
                 } else {
                     mark_area.push([{
-                        xAxis: window.index_page.chartPoint[i][0] - 0.5,
+                        xAxis: index_page.chartPoint[i][0] - 0.5,
                         itemStyle: {color: 'rgba(255, 133, 50, 0.5)',}
                     }, {
-                        xAxis: window.index_page.chartPoint[i][0] + 0.5,
+                        xAxis: index_page.chartPoint[i][0] + 0.5,
                     }]);
                 }
-            } else if (window.index_page.detectedAnomaly[curDetPos] == window.index_page.chartPoint[i][0]) {
+            } else if (index_page.detectedAnomaly[curDetPos] == index_page.chartPoint[i][0]) {
                 mark_area.push([{
-                    xAxis: window.index_page.chartPoint[i][0] - 0.5,
+                    xAxis: index_page.chartPoint[i][0] - 0.5,
                     itemStyle: {color: 'rgba(208, 238, 26, 0.5)',}
                 }, {
-                    xAxis: window.index_page.chartPoint[i][0] + 0.5,
+                    xAxis: index_page.chartPoint[i][0] + 0.5,
                 }]);
             }
         }
         console.log(mark_area);
         var xStartValue, xEndValue, yStartValue, yEndValue;
-        xStartValue = window.index_page.chartPoint[0][0]
-        if (window.index_page.chartPoint.length > 100) {
-            xEndValue = window.index_page.chartPoint[99][0];
+        xStartValue = index_page.chartPoint[0][0]
+        if (index_page.chartPoint.length > 100) {
+            xEndValue = index_page.chartPoint[99][0];
         } else {
-            xEndValue = window.index_page.chartPoint[window.index_page.chartPoint.length - 1][0]
+            xEndValue = index_page.chartPoint[index_page.chartPoint.length - 1][0]
         }
 
         // 指定图表的配置项和数据
@@ -197,7 +213,7 @@
                     name: '数据值',
                     type: 'line',
                     smooth: true,
-                    data: window.index_page.chartPoint,
+                    data: index_page.chartPoint,
                     markArea: {
                         data: mark_area
                     }
@@ -236,32 +252,43 @@
 
     $(function () {
         $("#smt_slt").click(function () {
-            $alg = window.index_page.alg_sel;
+            $alg = index_page.alg_sel;
             if ($alg === "") {
                 alert("请选择算法");
                 return;
             }
-            $data = window.index_page.data_sel;
+            $data = index_page.data_sel;
             if ($data === "") {
                 alert("请选择数据集");
                 return;
             }
+            if (index_page.windows_sel.length == 0)
+            {
+                alert("请选择至少一个数据段");
+                return;
+            }
+            index_page.windows_sel.sort(function (a, b) {
+                return a - b;
+            });
+            console.log(index_page.windows_sel);
             $.ajax({
                 url: "/getdata",
                 type: "post",
+                traditional: true,
                 data: {
                     algorithm: $alg,
-                    dataset: $data
+                    dataset: $data,
+                    windows: index_page.windows_sel
                 },
                 success: function (response) {
-                    result = JSON.parse(response);
+                    let result = JSON.parse(response);
                     console.log(result);
-                    window.index_page.chartPoint = result.data_set;
-                    window.index_page.originalAnomaly = result.original_anomaly;
-                    window.index_page.detectedAnomaly = result.detected_anomaly;
+                    index_page.chartPoint = result.data_set;
+                    index_page.originalAnomaly = result.original_anomaly;
+                    index_page.detectedAnomaly = result.detected_anomaly;
                     ret_alg = $alg;
                     ret_data = $data;
-                    window.index_page.ret_val = "算法为" + ret_alg + "，数据集为" + ret_data;
+                    index_page.ret_val = "算法为" + ret_alg + "，数据集为" + ret_data;
                     setCharts();
                 }
             });
@@ -274,14 +301,52 @@
         delimiters: ['[[', ']]'],
         el: "#index_page",
         data: {
+            window_series: [],
             alg_sel: "",
             data_sel: "",
             ret_val: "暂未选择数据集和算法",
+            windows_sel: [],
             chartPoint: [],
             originalAnomaly: [],
             detectedAnomaly: []
         },
-        methods: {}
+        methods: {
+            loadWindows: function () {
+                //alert(this.data_sel);
+                $.ajax({
+                    url: "/getwindows",
+                    type: "post",
+                    data: {
+                        data_set: index_page.data_sel,
+                    },
+                    success: function (response) {
+                        let result = JSON.parse(response);
+                        console.log(result);
+                        while (index_page.window_series.length > 0)
+                        {
+                            index_page.window_series.shift();
+                        }
+                        while (index_page.windows_sel.length > 0)
+                        {
+                            index_page.windows_sel.shift();
+                        }
+                        for (var i = 0; i < (result.data_size / result.window_size); i++)
+                        {
+                            let sp = 1 + result.window_size * i;
+                            let ep = sp + result.window_size;
+                            if (ep > result.data_size) {
+                                ep = result.data_size;
+                            }
+                            index_page.window_series.push({
+                                start: "[" + sp.toString(),
+                                end: ep.toString() + "]"
+                            });
+                        }
+                        console.log(index_page.window_series);
+                    }
+                });
+            }
+        }
     });
 </script>
 <style>
@@ -316,7 +381,7 @@
         height: 60px;
     }
 
-    .el-radio__label
+    .el-radio__label, .el-checkbox__label
     {
         font-size: 18px;
     }
