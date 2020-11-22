@@ -3,10 +3,9 @@
 
 
 ```terminal
-ssh serveradmin@10.60.38.173
-********* ->pswd
-docker exec -it tumu bash
-cd tumu
+ssh serveradmin@10.**.**.***
+********* //pswd
+docker exec -it anomaly bash
 ```
 
 * 下载一个filezila
