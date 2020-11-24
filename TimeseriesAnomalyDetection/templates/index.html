@@ -1,0 +1,406 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'vuejs/index.css' %}">
+</head>
+<body>
+<div id="index_page">
+    <el-container :span="24">
+        <el-header :span="24" style="height: 80px">
+            <el-menu :default-active="activeIndex" class="el-menu-demo"
+                     mode="horizontal" text-color="rgb(	100, 149, 237)">
+                <el-menu-item><span>基于时间序列的异常检测</span></el-menu-item>
+            </el-menu>
+        </el-header>
+        <br/>
+        <br/>
+        <el-row class="tac" style="padding-left: 30px; padding-right: 30px">
+            <el-col :span="4">
+                <el-menu class="el-menu-vertical-demo">
+                    <el-collapse>
+                        <el-collapse-item name="1">
+                            <template slot="title">
+                                <i class="header-icon el-icon-cpu"></i> &nbsp;
+                                <span>请选择算法</span>
+                            </template>
+                            <template>
+                                <div class="item-title">
+                                    &nbsp; &nbsp;
+                                    <el-radio v-model="alg_sel" label="LSTM">LSTM</el-radio>
+                                </div>
+                                <div class="item-title">
+                                    &nbsp; &nbsp;
+                                    <el-radio v-model="alg_sel" label="VAE">VAE</el-radio>
+                                </div>
+                            </template>
+                        </el-collapse-item>
+                        <el-collapse-item name="2">
+                            <template slot="title">
+                                <i class="header-icon el-icon-data-analysis"></i> &nbsp;
+                                <span>请选择数据集</span>
+                            </template>
+                            <template>
+                                <el-radio-group v-model="data_sel" @change="loadWindows">
+                                    <div class="item-title">
+                                        &nbsp; &nbsp;
+                                        <el-radio label="YAHOO">YAHOO</el-radio>
+                                    </div>
+                                    <div class="item-title">
+                                        &nbsp; &nbsp;
+                                        <el-radio label="NAB">NAB</el-radio>
+                                    </div>
+                                </el-radio-group>
+                            </template>
+                        </el-collapse-item>
+                        <el-collapse-item name="3">
+                            <template slot="title">
+                                <i class="header-icon el-icon-data-analysis"></i> &nbsp;
+                                <span>请选择数据段</span>
+                            </template>
+                            <template>
+                                <el-checkbox-group v-model="windows_sel">
+                                    <div v-for="(item, index) in window_series" class="item-title" >
+                                        &nbsp; &nbsp;
+                                        <el-checkbox :label="index">数据段区间[[ item.start ]],&nbsp;[[ item.end ]]</el-checkbox>
+                                    </div>
+                                </el-checkbox-group>
+                            </template>
+                        </el-collapse-item>
+                    </el-collapse>
+                    <el-col :span="8" :offset="8">
+                        <el-button type="primary" id="smt_slt">提交</el-button>
+                    </el-col>
+                </el-menu>
+            </el-col>
+            <el-col :span="20" style="padding-left: 30px; padding-right: 30px">
+                <h2>[[ ret_val ]]</h2>
+                <el-divider></el-divider>
+                <br/> <br/>
+                <el-row>
+                    <el-col :span="22" :offset="1">
+                        <div id="echart" style="width: 100%; height: 600px"></div>
+                    </el-col>
+                </el-row>
+            </el-col>
+        </el-row>
+    </el-container>
+</div>
+<script src="{% static 'vuejs/vue.js' %}"></script>
+<script src="{% static 'vuejs/index.js' %}"></script>
+<script src="{% static 'vuejs/axios.min.js' %}"></script>
+<script src="{% static 'vuejs/echarts.min.js' %}"></script>
+<script src="{% static 'jquery/jquery-1.12.4.min.js' %}"></script>
+<script>
+    function setCharts() {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('echart'));
+        var mark_area = [];
+        var curOriPos = 0, curDetPos = 0;
+        console.log(index_page);
+        for (var i = 0; i < index_page.chartPoint.length; i++) {
+            while (curOriPos < index_page.originalAnomaly.length &&
+            index_page.originalAnomaly[curOriPos] < index_page.chartPoint[i][0]) {
+                curOriPos++;
+            }
+            while (curDetPos < index_page.detectedAnomaly.length &&
+            index_page.detectedAnomaly[curDetPos] < index_page.chartPoint[i][0]) {
+                curDetPos++;
+            }
+            if (index_page.originalAnomaly[curOriPos] == index_page.chartPoint[i][0]) {
+                if (index_page.detectedAnomaly[curDetPos] == index_page.chartPoint[i][0]) {
+                    mark_area.push([{
+                        xAxis: index_page.chartPoint[i][0] - 0.5,
+                        itemStyle: {color: 'rgba(144, 238, 144, 0.5)',}
+                    }, {
+                        xAxis: index_page.chartPoint[i][0] + 0.5,
+                    }]);
+                } else {
+                    mark_area.push([{
+                        xAxis: index_page.chartPoint[i][0] - 0.5,
+                        itemStyle: {color: 'rgba(255, 133, 50, 0.5)',}
+                    }, {
+                        xAxis: index_page.chartPoint[i][0] + 0.5,
+                    }]);
+                }
+            } else if (index_page.detectedAnomaly[curDetPos] == index_page.chartPoint[i][0]) {
+                mark_area.push([{
+                    xAxis: index_page.chartPoint[i][0] - 0.5,
+                    itemStyle: {color: 'rgba(208, 238, 26, 0.5)',}
+                }, {
+                    xAxis: index_page.chartPoint[i][0] + 0.5,
+                }]);
+            }
+        }
+        console.log(mark_area);
+        var xStartValue, xEndValue, yStartValue, yEndValue;
+        xStartValue = index_page.chartPoint[0][0]
+        if (index_page.chartPoint.length > 100) {
+            xEndValue = index_page.chartPoint[99][0];
+        } else {
+            xEndValue = index_page.chartPoint[index_page.chartPoint.length - 1][0]
+        }
+
+        // 指定图表的配置项和数据
+        option = {
+            title: {
+                text: '时间序列',
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross'
+                }
+            },
+            legend: {
+                data: ['数据值', '正确区间', '错误区间', '缺失区间']
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                //min: 0,
+                //max: 12,
+                type: 'value',
+                boundaryGap: false,
+            },
+            yAxis: {
+                //min: 0,
+                //max: 100,
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value}'
+                },
+                axisPointer: {
+                    snap: true
+                }
+            },
+            dataZoom: [
+                {
+                    type: 'slider',
+                    startValue: xStartValue,
+                    endValue: xEndValue,
+                    xAxisIndex: 0,
+                    filterMode: 'empty'
+                },
+                {
+                    type: 'slider',
+                    //startValue: yStartValue,
+                    //endValue: yEndValue,
+                    yAxisIndex: 0,
+                    filterMode: 'empty'
+                }/*,
+                {
+                    type: 'inside',
+                    xAxisIndex: 0,
+                    filterMode: 'empty'
+                },
+                {
+                    type: 'inside',
+                    yAxisIndex: 0,
+                    filterMode: 'empty'
+                }*/
+            ],
+            series: [
+                {
+                    name: '数据值',
+                    type: 'line',
+                    smooth: true,
+                    data: index_page.chartPoint,
+                    markArea: {
+                        data: mark_area
+                    }
+                },
+                {
+                    name: "正确区间",
+                    type: "bar",
+                    data: [],
+                    itemStyle: {
+                        normal: {color: 'rgba(144, 238, 144, 0.5)'}
+                    }
+                },
+                {
+                    name: "错误区间",
+                    type: "bar",
+                    data: [],
+                    itemStyle: {
+                        normal: {color: 'rgba(208, 238, 26, 0.5)'}
+                    }
+                },
+                {
+                    name: "缺失区间",
+                    type: "bar",
+                    data: [],
+                    itemStyle: {
+                        normal: {color: 'rgba(255, 133, 50, 0.5)'}
+                    }
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        //console.log(option.series[0].markArea.data)
+    }
+
+    $(function () {
+        $("#smt_slt").click(function () {
+            $alg = index_page.alg_sel;
+            if ($alg === "") {
+                alert("请选择算法");
+                return;
+            }
+            $data = index_page.data_sel;
+            if ($data === "") {
+                alert("请选择数据集");
+                return;
+            }
+            if (index_page.windows_sel.length == 0)
+            {
+                alert("请选择至少一个数据段");
+                return;
+            }
+            index_page.windows_sel.sort(function (a, b) {
+                return a - b;
+            });
+            console.log(index_page.windows_sel);
+            $.ajax({
+                url: "/getdata",
+                type: "post",
+                traditional: true,
+                data: {
+                    algorithm: $alg,
+                    dataset: $data,
+                    windows: index_page.windows_sel
+                },
+                success: function (response) {
+                    let result = JSON.parse(response);
+                    console.log(result);
+                    index_page.chartPoint = result.data_set;
+                    index_page.originalAnomaly = result.original_anomaly;
+                    index_page.detectedAnomaly = result.detected_anomaly;
+                    ret_alg = $alg;
+                    ret_data = $data;
+                    index_page.ret_val = "算法为" + ret_alg + "，数据集为" + ret_data;
+                    setCharts();
+                }
+            });
+        })
+    });
+
+</script>
+<script>
+    var index_page = new Vue({
+        delimiters: ['[[', ']]'],
+        el: "#index_page",
+        data: {
+            window_series: [],
+            alg_sel: "",
+            data_sel: "",
+            ret_val: "暂未选择数据集和算法",
+            windows_sel: [],
+            chartPoint: [],
+            originalAnomaly: [],
+            detectedAnomaly: []
+        },
+        methods: {
+            loadWindows: function () {
+                //alert(this.data_sel);
+                $.ajax({
+                    url: "/getwindows",
+                    type: "post",
+                    data: {
+                        data_set: index_page.data_sel,
+                    },
+                    success: function (response) {
+                        let result = JSON.parse(response);
+                        console.log(result);
+                        while (index_page.window_series.length > 0)
+                        {
+                            index_page.window_series.shift();
+                        }
+                        while (index_page.windows_sel.length > 0)
+                        {
+                            index_page.windows_sel.shift();
+                        }
+                        for (var i = 0; i < (result.data_size / result.window_size); i++)
+                        {
+                            let sp = 1 + result.window_size * i;
+                            let ep = sp + result.window_size;
+                            if (ep > result.data_size) {
+                                ep = result.data_size;
+                            }
+                            index_page.window_series.push({
+                                start: "[" + sp.toString(),
+                                end: ep.toString() + "]"
+                            });
+                        }
+                        console.log(index_page.window_series);
+                    }
+                });
+            }
+        }
+    });
+</script>
+<style>
+
+    header .el-header
+    {
+        height: 100px;
+    }
+
+    .el-header > .el-menu > .el-menu-item
+    {
+        height: 100px;
+        padding-top: 40px;
+    }
+
+    .el-header > .el-menu > .el-menu-item > span
+    {
+        font-size: 36px;
+        font-family: 方正黑体简体;
+        font-weight: 700;
+    }
+
+    .el-menu-vertical-demo
+    {
+        height: 700px;
+        /*background-color: rgb(200, 245, 221);*/
+    }
+
+    .el-collapse-item__header
+    {
+        font-size: 20px;
+        height: 60px;
+    }
+
+    .el-radio__label, .el-checkbox__label
+    {
+        font-size: 18px;
+    }
+
+    .item-title
+    {
+        padding-top: 17px;
+        padding-bottom: 9px;
+    }
+
+    #smt_slt
+    {
+        width: 100%;
+        height: 50px;
+        margin-top: 30px;
+        text-align: center;
+        font-size: 18px;
+    }
+
+</style>
+</body>
+</html>
