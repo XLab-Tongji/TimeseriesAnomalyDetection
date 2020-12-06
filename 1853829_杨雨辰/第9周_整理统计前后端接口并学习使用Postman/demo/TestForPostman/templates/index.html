@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Page</title>
+    <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<body>
+    <script>
+        $(function () {
+            $("#btn").click(function () {
+                var textval = $("#textval").val();
+                var price = $("#price").val();
+                $.ajax({
+                    url: "/get_data",
+                    type: "POST",
+                    traditional: true,
+                    data: {
+                        text: textval,
+                        price: price
+                    },
+                    success: function (response) {
+                        var res = JSON.parse(response);
+                        console.log(res);
+                        var _text = res.text;
+                        var _price = res.price;
+                        $("#show_text").text(_text);
+                        $("#show_price").text(_price);
+                    }
+                });
+            })
+        })
+    </script>
+    <div>
+        text: <input type="text" id="textval">
+        price: <input type="text" id="price">
+        <input type="button" id="btn" value="submit">
+    </div>
+    <h2>textarea:<span id="show_text"></span></h2>
+    <h2>pricearea:<span id="show_price"></span></h2>
+</body>
+</html>
