@@ -79,7 +79,46 @@
     
 ## EarlyStopping  
 
+* 作用：当受监视的指标停止改进时停止培训
 
+* 本项目中使用的
+
+  ```python
+  es = tf.keras.callbacks.EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=2)
+  ```
+
+* ```python
+  tf.keras.callbacks.EarlyStopping(
+      monitor='val_loss', min_delta=0, patience=0, verbose=0, mode='auto',
+      baseline=None, restore_best_weights=False
+  )
+  ```
+
+  | `monitor`              | Quantity to be monitored.                                    |
+  | ---------------------- | ------------------------------------------------------------ |
+  | `min_delta`            | Minimum change in the monitored quantity to qualify as an improvement, i.e. an absolute change of less than min_delta, will count as no improvement. |
+  | `patience`             | Number of epochs with no improvement after which training will be stopped. |
+  | `verbose`              | verbosity mode.                                              |
+  | `mode`                 | One of `{"auto", "min", "max"}`. In `min` mode, training will stop when the quantity monitored has stopped decreasing; in `"max"` mode it will stop when the quantity monitored has stopped increasing; in `"auto"` mode, the direction is automatically inferred from the name of the monitored quantity. |
+  | `baseline`             | Baseline value for the monitored quantity. Training will stop if the model doesn't show improvement over the baseline. |
+  | `restore_best_weights` | Whether to restore model weights from the epoch with the best value of the monitored quantity. If False, the model weights obtained at the last step of training are used. |
 
 ## Fit/Train
 
+```python
+model.fit(x=train_ds,epochs=100,callbacks=cb, steps_per_epoch=20)
+```
+
+* x: 训练集的输入数据
+* epochs: 迭代次数（不一定越高越好，太多次可能会出现过拟合现象，10次就可以到达85%以上的准确率了，可以适当增加；**如果发生过拟合问题，建议换回最初的模型重新跑**）
+* callbacks: 回调函数（本模型中使用的是上面讲的ES）
+* steps_per_epoch: 每次迭代中的步数
+  * ` batchSize * steps_per_epoch = 每个epoch中用到的数据条数`
+
+
+
+## 路径问题
+
+尽量使用相对路径，请自行python中查阅相对路径的写法
+
+⚠️需要特别特别注意的是，`相对路径`相对的是`开始运行的那个文件的路径`，而不是`使用相对路径的文件所在路径`
