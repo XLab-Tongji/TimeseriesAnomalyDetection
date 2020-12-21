@@ -23,24 +23,22 @@
 
 - [High-level Design Document]()
 - [Detailed Design Document]()
-
-## Research on Project Feasibility
-
-- [Research on Parallel Matrix Multiplication Algorithm Based on CUDA]() 
-- [Feasibility and Principles of CUDA Multi-GPU Parallel Computing Based on NVIDIA Multi-GPU Technology]()
-
 ## Study on DAD
 
 * [DEEP LEARNING FOR ANOMALY DETECTION: A SURVEY]()
-* [TSI: Time series to imaging based model for detecting anomalous energy consumption in smart buildings]()
-* [A Novel Technique for Long-Term Anomaly Detection in the Cloud]()
-* [A Deep Neural Network for Unsupervised Anomaly Detection and Diagnosis in Multivariate Time Series Data]()
-* [Outlier Detection for Time Series with Recurrent Auto-encoder Ensembles]()
+## Research on Project Feasibility
+
+- [TSI: Time series to imaging based model for detecting anomalous energy consumption in smart buildings]()
+- [A Novel Technique for Long-Term Anomaly Detection in the Cloud]()
+- [A Deep Neural Network for Unsupervised Anomaly Detection and Diagnosis in Multivariate Time Series Data]()
+- [Outlier Detection for Time Series with Recurrent Auto-encoder Ensembles]()
+
 
 ## Training Configuration
 
 * [TSI-ECG Training Configuration]()
 * [RNN-ECG Training Configuration]()
+* [Front end using manual]()
 
 ## Dataset
 
