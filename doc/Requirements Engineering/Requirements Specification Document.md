@@ -12,11 +12,22 @@ A common need when analyzing real-world data-sets is determining which instances
 
 ### Purpose
 
-The purpose of this project is to study and investigate the method of DAD, for example TSI+CNN, RNN, LSTM, etc. Based on above study and survey, it is expected to provide a program with simple, user-friendly interface for anomaly detection based on time series data.
+The purpose of this project is to study and investigate the method of DAD, for example TSI+CNN, RNN, LSTM, etc. Based on above study and survey, it is expected to provide a program with simple, user-friendly front-end display page for anomaly detection based on time series data, which can read the file uploaded by users and support users to select specific models for anomaly detection.
+
+The goal of this project is to apply and practice software engineering methods and ideas during the scientific research process, from requirement analysis to modeling, to architecture design and detailed design, to the final code implementation and review at each stage. Throughout the project cycle, we always adopt the agile development model, hold weekly meetings, report on the work progress of the previous week, discuss solutions to problems encountered in the previous stage, and plan and assign tasks for the next week. At the same time, in order to make the whole project clear, we learned and tried many process management tools and project management tools, such as Microsoft Todo, github, postman, curtain, etc.
 
 ### Target Users
 
-### Boundary of the Project
+The target users of this program are health care providers who monitor medical and health care. After the product is finally delivered, the user can also be teachers and students who need to learn and research on time series data anomaly detection.
+
+### Our Works
+
+* Read related review papers and research papers, and learn the knowledge and methods of DAD.
+* Sort out the content of related papers, extract and organize key content.
+* Collect the implementation code of related papers, improve and train the model.
+* Sorted out some time series data sets related to the research field of the project, such as smart meter data with time stamps.
+* Design and implement a humanized front-end, allowing users to upload time series data files and select specific models for outlier detection.
+* Write related documents, such as model training manuals, user manuals, etc.
 
 ## Use Case Analysis
 
