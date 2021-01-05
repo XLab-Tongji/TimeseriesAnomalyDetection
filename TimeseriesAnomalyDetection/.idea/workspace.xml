@@ -7,6 +7,20 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
@@ -37,12 +51,104 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/TimeseriesAnomalyDetection/TSI_CNN/model" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="run.code.analysis.last.selected.profile" value="aDefault" />
+    <property name="settings.editor.selected.configurable" value="fileTemplates" />
     <property name="settings.editor.splitter.proportion" value="0.22501966" />
   </component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\TongJi University\基于时间序列的异常检测\AnomalyDetection\TimeseriesAnomalyDetection\ECG" />
+      <recent name="D:\TongJi University\基于时间序列的异常检测\AnomalyDetection\TimeseriesAnomalyDetection\ECG\model" />
+      <recent name="D:\TongJi University\基于时间序列的异常检测\AnomalyDetection\TimeseriesAnomalyDetection\ECG\dataset" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Project_Code\Python_code\AnomalyDetection\TimeseriesAnomalyDetection\TSI_CNN\model" />
+      <recent name="D:\Project_Code\Python_code\AnomalyDetection\TimeseriesAnomalyDetection\TSI_CNN\dataset" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Django server.TimeseriesAnomalyDetection">
+    <configuration name="evaluate.py" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http:///TimeseriesAnomalyDetection/ECG/model/evaluate.py">
+      <method v="2" />
+    </configuration>
+    <configuration name="evaluate (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TimeseriesAnomalyDetection" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="/" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="&lt;22cc38af-2ec1-4500-ad8e-722a696aa568&gt;/workspace/AnomalyDetection/TimeseriesAnomalyDetection/ECG/model/evaluate.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="evaluate" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TimeseriesAnomalyDetection" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="D:\Anaconda3\envs\tf2.3\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/TimeseriesAnomalyDetection/ECG/model" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TimeseriesAnomalyDetection/ECG/model/evaluate.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="print_data" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TimeseriesAnomalyDetection" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/TimeseriesAnomalyDetection/ECG/dataset" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TimeseriesAnomalyDetection/ECG/dataset/print_data.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="TimeseriesAnomalyDetection" type="Python.DjangoServer" factoryName="Django server">
       <module name="TimeseriesAnomalyDetection" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -51,7 +157,7 @@
         <env name="PYTHONUNBUFFERED" value="1" />
         <env name="DJANGO_SETTINGS_MODULE" value="TimeseriesAnomalyDetection.settings" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="D:\Software\Anaconda3\envs\time_ad\python.exe" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -60,13 +166,28 @@
       <option name="port" value="8000" />
       <option name="host" value="" />
       <option name="additionalOptions" value="" />
-      <option name="browserUrl" value="" />
+      <option name="browserUrl" value="http://127.0.0.1:8000/index/" />
       <option name="runTestServer" value="false" />
       <option name="runNoReload" value="false" />
       <option name="useCustomRunCommand" value="false" />
       <option name="customRunCommand" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Django server.TimeseriesAnomalyDetection" />
+      <item itemvalue="JavaScript Debug.evaluate.py" />
+      <item itemvalue="Python.evaluate" />
+      <item itemvalue="Python.print_data" />
+      <item itemvalue="Python.evaluate (1)" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.evaluate" />
+        <item itemvalue="Python.evaluate (1)" />
+        <item itemvalue="JavaScript Debug.evaluate.py" />
+        <item itemvalue="Python.print_data" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -89,6 +210,60 @@
       <workItem from="1605434846321" duration="20000" />
       <workItem from="1605441561553" duration="7418000" />
       <workItem from="1605450374803" duration="283000" />
+      <workItem from="1605509554599" duration="6025000" />
+      <workItem from="1606035255904" duration="604000" />
+      <workItem from="1606037087715" duration="6308000" />
+      <workItem from="1606057898377" duration="778000" />
+      <workItem from="1606062354874" duration="112000" />
+      <workItem from="1606062674379" duration="2463000" />
+      <workItem from="1606103996911" duration="2372000" />
+      <workItem from="1606138291282" duration="2305000" />
+      <workItem from="1606140647391" duration="689000" />
+      <workItem from="1606282902273" duration="14964000" />
+      <workItem from="1606304870036" duration="1404000" />
+      <workItem from="1606892991950" duration="1548000" />
+      <workItem from="1606905001671" duration="587000" />
+      <workItem from="1606910369818" duration="391000" />
+      <workItem from="1607053993341" duration="1012000" />
+      <workItem from="1607176332113" duration="2193000" />
+      <workItem from="1607510498591" duration="154000" />
+      <workItem from="1607512090500" duration="344000" />
+      <workItem from="1607517107119" duration="256000" />
+      <workItem from="1607652449759" duration="1164000" />
+      <workItem from="1607653853325" duration="12000" />
+      <workItem from="1607656405106" duration="1471000" />
+      <workItem from="1607691452073" duration="5381000" />
+      <workItem from="1607759285300" duration="4866000" />
+      <workItem from="1607775381827" duration="1342000" />
+      <workItem from="1607776747984" duration="5189000" />
+      <workItem from="1607838480261" duration="2884000" />
+      <workItem from="1607881290694" duration="831000" />
+      <workItem from="1607924001795" duration="2738000" />
+      <workItem from="1607929728867" duration="1132000" />
+      <workItem from="1607931192021" duration="831000" />
+      <workItem from="1607952154218" duration="799000" />
+      <workItem from="1607954681677" duration="1256000" />
+      <workItem from="1608009425661" duration="1278000" />
+      <workItem from="1608449337119" duration="23462000" />
+      <workItem from="1608527802607" duration="14985000" />
+      <workItem from="1608703287641" duration="1390000" />
+      <workItem from="1609054043848" duration="6559000" />
+      <workItem from="1609061595427" duration="78000" />
+      <workItem from="1609062011711" duration="14634000" />
+      <workItem from="1609083163641" duration="3705000" />
+      <workItem from="1609130308517" duration="1599000" />
+      <workItem from="1609131927485" duration="10756000" />
+      <workItem from="1609163012336" duration="1355000" />
+      <workItem from="1609164384822" duration="1383000" />
+      <workItem from="1609227203871" duration="1084000" />
+      <workItem from="1609246856916" duration="6317000" />
+      <workItem from="1609327680903" duration="5601000" />
+      <workItem from="1609380703208" duration="9953000" />
+      <workItem from="1609687207811" duration="5360000" />
+      <workItem from="1609736916219" duration="4057000" />
+      <workItem from="1609759484278" duration="2190000" />
+      <workItem from="1609773586686" duration="673000" />
+      <workItem from="1609820592878" duration="572000" />
     </task>
     <servers />
   </component>
@@ -96,37 +271,115 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="361" y="71" key="#Deployment" timestamp="1607693941503">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="71" key="#Deployment/0.0.1536.824@0.0.1536.824" timestamp="1607693941503" />
+    <state x="549" y="61" key="#TimeseriesAnomalyDetection" timestamp="1608010743547">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="-1828" y="162" key="#TimeseriesAnomalyDetection/0.0.1536.824/-2560.0.2048.1112@-2560.0.2048.1112" timestamp="1606062414251" />
+    <state x="549" y="61" key="#TimeseriesAnomalyDetection/0.0.1536.824@0.0.1536.824" timestamp="1608010743547" />
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1608010835398">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1608010835398" />
+    <state x="219" y="219" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1609061274268">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="219" y="219" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1609061274268" />
     <state x="499" y="192" key="#com.intellij.ide.scriptingContext.ui.PerFileMappingsDialogWrapper" timestamp="1604844263069">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="192" key="#com.intellij.ide.scriptingContext.ui.PerFileMappingsDialogWrapper/0.0.1536.824@0.0.1536.824" timestamp="1604844263069" />
-    <state x="548" y="167" key="FileChooserDialogImpl" timestamp="1605434864173">
+    <state x="524" y="114" key="#xdebugger.evaluate" timestamp="1606292265519">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="548" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1605434864173" />
-    <state width="1493" height="162" key="GridCell.Tab.0.bottom" timestamp="1605450657344">
+    <state x="524" y="114" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1606292265519" />
+    <state x="-1781" y="426" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1606105367026">
+      <screen x="-2560" y="0" width="2048" height="1112" />
+    </state>
+    <state x="-1781" y="426" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824/-2560.0.2048.1112@-2560.0.2048.1112" timestamp="1606105367026" />
+    <state x="1017" y="215" key="FileChooserDialogImpl" timestamp="1607954735506">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="162" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1605450657344" />
-    <state width="1493" height="162" key="GridCell.Tab.0.center" timestamp="1605450657344">
+    <state x="1017" y="215" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1607954735506" />
+    <state width="1493" height="219" key="GridCell.Tab.0.bottom" timestamp="1609821005259">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="162" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1605450657344" />
-    <state width="1493" height="162" key="GridCell.Tab.0.left" timestamp="1605450657344">
+    <state width="2005" height="410" key="GridCell.Tab.0.bottom/0.0.1536.824/-2560.0.2048.1112@-2560.0.2048.1112" timestamp="1607841366556" />
+    <state width="1142" height="290" key="GridCell.Tab.0.bottom/0.0.1536.824/-2560.0.2048.1112@0.0.1536.824" timestamp="1607055994290" />
+    <state width="1493" height="219" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1609821005259" />
+    <state width="1493" height="219" key="GridCell.Tab.0.center" timestamp="1609821005259">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="162" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1605450657344" />
-    <state width="1493" height="162" key="GridCell.Tab.0.right" timestamp="1605450657344">
+    <state width="2005" height="410" key="GridCell.Tab.0.center/0.0.1536.824/-2560.0.2048.1112@-2560.0.2048.1112" timestamp="1607841366556" />
+    <state width="1142" height="290" key="GridCell.Tab.0.center/0.0.1536.824/-2560.0.2048.1112@0.0.1536.824" timestamp="1607055994290" />
+    <state width="1493" height="219" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1609821005259" />
+    <state width="1493" height="219" key="GridCell.Tab.0.left" timestamp="1609821005259">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="162" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1605450657344" />
-    <state x="-3" y="54" width="1357" height="715" key="SettingsEditor" timestamp="1605433389139">
+    <state width="2005" height="410" key="GridCell.Tab.0.left/0.0.1536.824/-2560.0.2048.1112@-2560.0.2048.1112" timestamp="1607841366556" />
+    <state width="1142" height="290" key="GridCell.Tab.0.left/0.0.1536.824/-2560.0.2048.1112@0.0.1536.824" timestamp="1607055994290" />
+    <state width="1493" height="219" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1609821005259" />
+    <state width="1493" height="219" key="GridCell.Tab.0.right" timestamp="1609821005259">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="-3" y="54" width="1357" height="715" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605433389139" />
-    <state x="449" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1605450374837">
+    <state width="2005" height="410" key="GridCell.Tab.0.right/0.0.1536.824/-2560.0.2048.1112@-2560.0.2048.1112" timestamp="1607841366556" />
+    <state width="1142" height="290" key="GridCell.Tab.0.right/0.0.1536.824/-2560.0.2048.1112@0.0.1536.824" timestamp="1607055994290" />
+    <state width="1493" height="219" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1609821005259" />
+    <state width="2005" height="410" key="GridCell.Tab.1.bottom" timestamp="1607841366556">
+      <screen x="-2560" y="0" width="2048" height="1112" />
+    </state>
+    <state width="2005" height="410" key="GridCell.Tab.1.bottom/0.0.1536.824/-2560.0.2048.1112@-2560.0.2048.1112" timestamp="1607841366556" />
+    <state width="1493" height="286" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1607783880954" />
+    <state width="2005" height="410" key="GridCell.Tab.1.center" timestamp="1607841366556">
+      <screen x="-2560" y="0" width="2048" height="1112" />
+    </state>
+    <state width="2005" height="410" key="GridCell.Tab.1.center/0.0.1536.824/-2560.0.2048.1112@-2560.0.2048.1112" timestamp="1607841366556" />
+    <state width="1493" height="286" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1607783880953" />
+    <state width="2005" height="410" key="GridCell.Tab.1.left" timestamp="1607841366556">
+      <screen x="-2560" y="0" width="2048" height="1112" />
+    </state>
+    <state width="2005" height="410" key="GridCell.Tab.1.left/0.0.1536.824/-2560.0.2048.1112@-2560.0.2048.1112" timestamp="1607841366556" />
+    <state width="1493" height="286" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1607783880953" />
+    <state width="2005" height="410" key="GridCell.Tab.1.right" timestamp="1607841366556">
+      <screen x="-2560" y="0" width="2048" height="1112" />
+    </state>
+    <state width="2005" height="410" key="GridCell.Tab.1.right/0.0.1536.824/-2560.0.2048.1112@-2560.0.2048.1112" timestamp="1607841366556" />
+    <state width="1493" height="286" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1607783880953" />
+    <state x="53" y="44" width="1357" height="715" key="SettingsEditor" timestamp="1609131903985">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="449" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1605450374837" />
+    <state x="-2564" y="73" key="SettingsEditor/0.0.1536.824/-2560.0.2048.1112@-2560.0.2048.1112" timestamp="1606062695137" />
+    <state x="53" y="44" width="1357" height="715" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1609131903985" />
+    <state x="449" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1609820648381">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="-1961" y="318" key="com.intellij.ide.util.TipDialog/0.0.1536.824/-2560.0.2048.1112@-2560.0.2048.1112" timestamp="1607881292717" />
+    <state x="449" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824/-2560.0.2048.1112@0.0.1536.824" timestamp="1607838505941" />
+    <state x="449" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1609820648381" />
+    <state x="474" y="132" key="com.jetbrains.plugins.remotesdk.ui.RemoteMappingsConfiguration" timestamp="1607693148464">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="474" y="132" key="com.jetbrains.plugins.remotesdk.ui.RemoteMappingsConfiguration/0.0.1536.824@0.0.1536.824" timestamp="1607693148464" />
+    <state x="447" y="145" width="642" height="534" key="find.popup" timestamp="1606292501711">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="447" y="145" width="642" height="534" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1606292501711" />
+    <state x="623" y="132" width="492" height="538" key="ftp.server.browser" timestamp="1607693841298">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="623" y="132" width="492" height="538" key="ftp.server.browser/0.0.1536.824@0.0.1536.824" timestamp="1607693841298" />
+    <state x="515" y="180" width="672" height="503" key="search.everywhere.popup" timestamp="1609382195678">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="-1873" y="243" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/-2560.0.2048.1112@-2560.0.2048.1112" timestamp="1606064226848" />
+    <state x="515" y="180" width="672" height="503" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1609382195678" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/AnomalyDetection$evaluate__1_.coverage" NAME="evaluate (1) Coverage Results" MODIFIED="1607694129043" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="/" />
+    <SUITE FILE_PATH="coverage/AnomalyDetection$evaluate.coverage" NAME="evaluate Coverage Results" MODIFIED="1607782190915" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/TimeseriesAnomalyDetection/ECG/model" />
+    <SUITE FILE_PATH="coverage/AnomalyDetection$print_data.coverage" NAME="print_data Coverage Results" MODIFIED="1606117464719" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/TimeseriesAnomalyDetection/ECG/dataset" />
   </component>
 </project>

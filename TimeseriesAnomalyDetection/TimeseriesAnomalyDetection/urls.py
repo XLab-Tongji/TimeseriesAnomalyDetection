@@ -22,5 +22,7 @@ urlpatterns = [
     url('admin/', admin.site.urls),
     url(r'index/$', views.index),
     url(r'getdata$', views.get_data),
-    url(r'getwindows$', views.get_windows)
+    url(r'getwindows$', views.get_windows),
+    url(r'getfiles$', views.get_files),
+    url(r'savefile', views.save_file)
 ]

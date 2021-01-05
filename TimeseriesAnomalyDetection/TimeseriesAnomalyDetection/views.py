@@ -1,6 +1,11 @@
+import os
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
+from . import settings
+from TimeseriesAnomalyDetection.TSI_CNN.dataset.tf_dataset_eval import init_val, load_file, send_dataset, send_dataset_param
+from TimeseriesAnomalyDetection.TSI_CNN.model.evaluate import evaluate
+from TimeseriesAnomalyDetection.RNN.readData import get_RNN_result
 import json
 
 
@@ -11,17 +16,45 @@ def index(request):
 @csrf_exempt
 def get_windows(request):
     post_content = request.POST
-    dataset = post_content.get("data_set")
-    print(dataset)
-    data_size = 130
-    if dataset == "NAB":
-        data_size = 160
-    window_size = 12
+    file_name = post_content.get("file")
+    print(post_content)
+    print(file_name)
+    if len(file_name) == 0:
+        init_val()
+    else:
+        load_file(file_name)
+    data_size, window_size = send_dataset_param()
     retval = {
         "data_size": data_size,
-        "window_size": window_size
+        "window_size": window_size,
     }
     return HttpResponse(json.dumps(retval))
+
+
+@csrf_exempt
+def get_files(request):
+    retval = ["original data"]
+    file_dir = "./TimeseriesAnomalyDetection/TSI_CNN/dataset/data/upload_data/"
+    for root, dirs, files in os.walk(file_dir):
+        for item in files:
+            if item.endswith(".csv"):
+                retval.append(item)
+    return HttpResponse(json.dumps(retval))
+
+
+@csrf_exempt
+def save_file(request):
+    file = request.FILES.get("file")
+    if file:
+        dir = os.path.join(settings.BASE_DIR, "TimeseriesAnomalyDetection\\TSI_CNN\\dataset\\data\\upload_data\\")
+        print(dir)
+        destination = open(os.path.join(dir, file.name), 'wb+')
+        for chunk in file.chunks():
+            destination.write(chunk)
+        destination.close()
+        return HttpResponse(json.dumps("success"))
+    else:
+        return HttpResponse(json.dumps("error"))
 
 
 @csrf_exempt
@@ -36,62 +69,35 @@ def get_data(request):
     post_content = request.POST
     algorithm = post_content.get("algorithm")
     dataset = post_content.get("dataset")
-    windows = post_content.getlist("windows")
+    window = post_content.get("window")
+    model_type = post_content.get("model_type")
+    file_name = post_content.get("file")
 
-    print(algorithm + " / " + dataset)
-    print(windows)
+    print(post_content)
 
     data_set = []
     original_anomaly = []
-    detected_anomaly = []
+    detect_res = []
+    original_value = "0"
+    res_value = "0"
+    auc_val = ""
 
     # 设置传给前端的相关数据
-    data_set.append([2, 5])
-    data_set.append([3, 6])
-    data_set.append([4, 2])
-    data_set.append([5, 7])
-    data_set.append([7, 18])
-    data_set.append([8, 45])
-    data_set.append([10, 12])
-    data_set.append([12, 14])
-    data_set.append([14, 16])
-    data_set.append([15, 10])
-    data_set.append([16, 6])
-    data_set.append([17, 8])
-    data_set.append([18, 4])
-    data_set.append([19, 12])
-    data_set.append([20, 18])
-    data_set.append([21, 26])
-    data_set.append([22, 26])
-    data_set.append([23, 16])
-    data_set.append([24, 25])
-    data_set.append([25, 32])
-    data_set.append([28, 36])
-    data_set.append([29, 24])
-    data_set.append([30, 22])
-    data_set.append([34, 12])
-    data_set.append([35, 16])
-
-    original_anomaly.append(7)
-    original_anomaly.append(8)
-    original_anomaly.append(15)
-    original_anomaly.append(16)
-    original_anomaly.append(17)
-    original_anomaly.append(28)
-    original_anomaly.append(29)
-
-    detected_anomaly.append(15)
-    detected_anomaly.append(16)
-    detected_anomaly.append(17)
-    detected_anomaly.append(22)
-    detected_anomaly.append(23)
-    detected_anomaly.append(29)
+    if model_type == 'true':
+        data_set = send_dataset(int(window))
+        original_value, res_value = evaluate(int(window), file_name)
+    else:
+        data_set, original_anomaly, detect_res, auc_val = get_RNN_result(dataset.lower(), algorithm)
 
     retval = {
         "data_set": data_set,
         "original_anomaly": original_anomaly,
-        "detected_anomaly": detected_anomaly
+        "detect_res": detect_res,
+        "original_value": original_value,
+        "res_value": res_value,
+        "auc": auc_val
     }
 
-    return HttpResponse(json.dumps(retval))
+    print(retval)
 
+    return HttpResponse(json.dumps(retval))

@@ -4,24 +4,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
+    <title>基于时间序列的异常检测</title>
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'vuejs/index.css' %}">
 </head>
 <body>
 <div id="index_page">
-    <el-container :span="24">
-        <el-header :span="24" style="height: 80px">
+    <el-container>
+        <el-header>
             <el-menu :default-active="activeIndex" class="el-menu-demo"
                      mode="horizontal" text-color="rgb(	100, 149, 237)">
-                <el-menu-item><span>基于时间序列的异常检测</span></el-menu-item>
+                <el-menu-item>
+                    <img src="{% static 'img/college.png' %}" alt="" style="margin-left: -5px;margin-top: -40px;">
+                </el-menu-item>
+                <el-menu-item style="margin-bottom: 5px;">
+                    <span>基于时间序列的异常检测</span>
+                </el-menu-item>
             </el-menu>
         </el-header>
-        <br/>
-        <br/>
-        <el-row class="tac" style="padding-left: 30px; padding-right: 30px">
-            <el-col :span="4">
-                <el-menu class="el-menu-vertical-demo">
+        <el-container>
+            <el-aside>
+                <el-scrollbar class='page-component__scroll'>
                     <el-collapse>
                         <el-collapse-item name="1">
                             <template slot="title">
@@ -29,65 +32,123 @@
                                 <span>请选择算法</span>
                             </template>
                             <template>
-                                <div class="item-title">
-                                    &nbsp; &nbsp;
-                                    <el-radio v-model="alg_sel" label="LSTM">LSTM</el-radio>
-                                </div>
-                                <div class="item-title">
-                                    &nbsp; &nbsp;
-                                    <el-radio v-model="alg_sel" label="VAE">VAE</el-radio>
-                                </div>
+                                <el-checkbox-group v-model="model_sel" :max="1" style="width: 100%"
+                                                   @change="loadForm">
+                                    <el-divider class="aside-divider"></el-divider>
+                                    <div v-for="item in modelList" class="item-title">
+                                        &nbsp; &nbsp;
+                                        <el-checkbox :label="item">[[ item ]]</el-checkbox>
+                                    </div>
+                                </el-checkbox-group>
                             </template>
                         </el-collapse-item>
-                        <el-collapse-item name="2">
+                        <el-collapse-item name="2" v-show="datasetShow">
                             <template slot="title">
                                 <i class="header-icon el-icon-data-analysis"></i> &nbsp;
                                 <span>请选择数据集</span>
                             </template>
                             <template>
-                                <el-radio-group v-model="data_sel" @change="loadWindows">
-                                    <div class="item-title">
+                                <el-checkbox-group v-model="data_sel" :max="1" style="width: 100%">
+                                    <el-divider class="aside-divider"></el-divider>
+                                    <div v-for="item in datasetList" class="item-title">
                                         &nbsp; &nbsp;
-                                        <el-radio label="YAHOO">YAHOO</el-radio>
-                                    </div>
-                                    <div class="item-title">
-                                        &nbsp; &nbsp;
-                                        <el-radio label="NAB">NAB</el-radio>
-                                    </div>
-                                </el-radio-group>
-                            </template>
-                        </el-collapse-item>
-                        <el-collapse-item name="3">
-                            <template slot="title">
-                                <i class="header-icon el-icon-data-analysis"></i> &nbsp;
-                                <span>请选择数据段</span>
-                            </template>
-                            <template>
-                                <el-checkbox-group v-model="windows_sel">
-                                    <div v-for="(item, index) in window_series" class="item-title" >
-                                        &nbsp; &nbsp;
-                                        <el-checkbox :label="index">数据段区间[[ item.start ]],&nbsp;[[ item.end ]]</el-checkbox>
+                                        <el-checkbox :label="item">[[ item ]]</el-checkbox>
                                     </div>
                                 </el-checkbox-group>
                             </template>
                         </el-collapse-item>
+                        <el-collapse-item id="item_file" name="3" v-show="fileShow">
+                            <template slot="title">
+                                <i class="header-icon el-icon-upload2"></i> &nbsp;
+                                <span>请选择数据文件</span>
+                            </template>
+
+                            <template>
+                                <el-divider class="aside-divider"></el-divider>
+                                <el-button @click="executeUpload"
+                                           style="margin-top: 10px; margin-left: 18px; padding: 12px 18px;"
+                                           type="default" size="small" plain>点击此处上传本地数据文件，仅限csv格式
+                                </el-button>
+                                <el-upload style="display: none" action="/savefile" :on-success="refreshFile"
+                                           accept=".csv" :before-upload="judgeType">
+                                    <el-button style="display: none" id="smt_file"></el-button>
+                                </el-upload>
+                                <el-checkbox-group v-model="file_sel" :max="1" @Change="loadWindows">
+                                    <div v-for="item in file_series" class="item-title">
+                                        &nbsp; &nbsp;
+                                        <el-checkbox :label="item">[[item]]</el-checkbox>
+                                    </div>
+                                </el-checkbox-group>
+                            </template>
+                        </el-collapse-item>
+                        <el-collapse-item name="4" v-show="fileShow && file_sel.length > 0">
+                            <template slot="title">
+                                <i class="header-icon el-icon-copy-document"></i> &nbsp;
+                                <span>请选择数据段</span>
+                            </template>
+                            <template>
+                                <el-divider class="aside-divider"></el-divider>
+                                <div v-loading="windowLoading" style="margin-right: 10px;">
+                                    <p style="margin-left: 15px;">心电图序列编号为0 ~ [[maxWindowNum]]</p>
+                                    <el-input-number v-model="window_sel" :step="1" :min="0" :max="maxWindowNum"
+                                                     :precision="0"
+                                                     style="margin-left: 50px; padding-bottom: 10px;"></el-input-number>
+                                </div>
+
+                            </template>
+                        </el-collapse-item>
+
                     </el-collapse>
                     <el-col :span="8" :offset="8">
                         <el-button type="primary" id="smt_slt">提交</el-button>
                     </el-col>
-                </el-menu>
-            </el-col>
-            <el-col :span="20" style="padding-left: 30px; padding-right: 30px">
-                <h2>[[ ret_val ]]</h2>
-                <el-divider></el-divider>
-                <br/> <br/>
-                <el-row>
-                    <el-col :span="22" :offset="1">
-                        <div id="echart" style="width: 100%; height: 600px"></div>
-                    </el-col>
-                </el-row>
-            </el-col>
-        </el-row>
+                </el-scrollbar>
+            </el-aside>
+            <el-divider direction="vertical"></el-divider>
+            <el-main>
+                <el-scrollbar class='page-component__scroll' v-loading="resLoading"
+                              element-loading-text="模型预测中，请稍候"
+                              element-loading-background="rgba(255, 255, 255, 0.9)">
+                    <div class="dis_area" id="res_info" v-show="infoShow['res']">
+                        <el-table :data="tableData" border style="width: 94%; margin-left: 20px; margin-top: 28px;"
+                                  :header-cell-style="{background:'#EFFBFB',color:'#409EFF'}">
+                            <el-table-column align="center" prop="model" label="模型" width="180"></el-table-column>
+                            <el-table-column align="center" prop="dataset" label="数据集" width="180"></el-table-column>
+                            <el-table-column align="center" prop="stdrate" :label="col3Name"></el-table-column>
+                            <el-table-column align="center" prop="currate" :label="col4Name"></el-table-column>
+                            <el-table-column align="center" label="正确结果">
+                                <template slot-scope="scope">
+                                    <el-tag v-show="stdRes == 1" type="success" size="medium">正常</el-tag>
+                                    <el-tag v-show="stdRes == 2" type="danger" size="medium">异常</el-tag>
+                                    <span v-show="stdRes == 0">------</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column align="center" label="检测结果">
+                                <template slot-scope="scope">
+                                    <el-tag v-show="curRes == 1" type="success" size="medium">正常</el-tag>
+                                    <el-tag v-show="curRes == 2" type="danger" size="medium">异常</el-tag>
+                                    <span v-show="curRes == 0">------</span>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                        <div id="echart"
+                             style="width: 1152px; height: 442px; margin-top: 26px; margin-left: 22px;"></div>
+                    </div>
+                    <div class="dis_area" id="welcome_info" v-show="infoShow['welcome']">
+                        <img class="dis_img" src="{% static 'img/welcome.png' %}" alt="欢迎界面">
+                    </div>
+                    <div class="dis_area" id="TSI_CNN_info" v-show="infoShow['TSI_CNN']">
+                        <img class="dis_img" src="{% static 'img/TSI.png' %}" alt="图片显示失败，请重新加载">
+                    </div>
+                    <div class="dis_area" id="LSTM_info" v-show="infoShow['LSTM']">
+                        <img class="dis_img" src="{% static 'img/LSTM.png' %}" alt="LSTM图片">
+                    </div>
+                    <div class="dis_area" id="GRU_info" v-show="infoShow['GRU']">
+                        <img class="dis_img" src="{% static 'img/GRU.png' %}" alt="GRU图片">
+                    </div>
+                </el-scrollbar>
+            </el-main>
+        </el-container>
     </el-container>
 </div>
 <script src="{% static 'vuejs/vue.js' %}"></script>
@@ -96,60 +157,48 @@
 <script src="{% static 'vuejs/echarts.min.js' %}"></script>
 <script src="{% static 'jquery/jquery-1.12.4.min.js' %}"></script>
 <script>
-    function setCharts() {
+    function setCharts(model_type, dataset, chartPoint, originalAnomaly, detectRes) {
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echart'));
-        var mark_area = [];
-        var curOriPos = 0, curDetPos = 0;
-        console.log(index_page);
-        for (var i = 0; i < index_page.chartPoint.length; i++) {
-            while (curOriPos < index_page.originalAnomaly.length &&
-            index_page.originalAnomaly[curOriPos] < index_page.chartPoint[i][0]) {
-                curOriPos++;
-            }
-            while (curDetPos < index_page.detectedAnomaly.length &&
-            index_page.detectedAnomaly[curDetPos] < index_page.chartPoint[i][0]) {
-                curDetPos++;
-            }
-            if (index_page.originalAnomaly[curOriPos] == index_page.chartPoint[i][0]) {
-                if (index_page.detectedAnomaly[curDetPos] == index_page.chartPoint[i][0]) {
-                    mark_area.push([{
-                        xAxis: index_page.chartPoint[i][0] - 0.5,
-                        itemStyle: {color: 'rgba(144, 238, 144, 0.5)',}
-                    }, {
-                        xAxis: index_page.chartPoint[i][0] + 0.5,
-                    }]);
-                } else {
-                    mark_area.push([{
-                        xAxis: index_page.chartPoint[i][0] - 0.5,
-                        itemStyle: {color: 'rgba(255, 133, 50, 0.5)',}
-                    }, {
-                        xAxis: index_page.chartPoint[i][0] + 0.5,
-                    }]);
-                }
-            } else if (index_page.detectedAnomaly[curDetPos] == index_page.chartPoint[i][0]) {
+        let myChart = echarts.init(document.getElementById('echart'));
+        let mark_area = [], linePieces = [];
+        let firstShowNum = 10000;
+        let dataPoint = [], normalPoint = [], anomalyPoint = [];
+        index_page.col3Name = "预计AUC值";
+        index_page.col4Name = "实际AUC值";
+
+        if (!model_type) {
+
+            for (let i = 0; i < originalAnomaly.length; i++) {
                 mark_area.push([{
-                    xAxis: index_page.chartPoint[i][0] - 0.5,
-                    itemStyle: {color: 'rgba(208, 238, 26, 0.5)',}
+                    xAxis: originalAnomaly[i][0],
+                    itemStyle: {color: 'rgba(255, 225, 22, 0.5)',}
                 }, {
-                    xAxis: index_page.chartPoint[i][0] + 0.5,
+                    xAxis: originalAnomaly[i][1],
                 }]);
             }
-        }
-        console.log(mark_area);
-        var xStartValue, xEndValue, yStartValue, yEndValue;
-        xStartValue = index_page.chartPoint[0][0]
-        if (index_page.chartPoint.length > 100) {
-            xEndValue = index_page.chartPoint[99][0];
+
+            normalPoint = detectRes[0];
+            anomalyPoint = detectRes[1];
+
         } else {
-            xEndValue = index_page.chartPoint[index_page.chartPoint.length - 1][0]
+            dataPoint = chartPoint;
+            firstShowNum = 50;
+            index_page.col3Name = "预计准确率";
+            index_page.col4Name = "实际准确率";
+        }
+
+        let xStartValue, xEndValue;
+        xStartValue = chartPoint[0][0];
+        if (chartPoint.length > firstShowNum) {
+            xEndValue = chartPoint[firstShowNum - 1][0];
+        } else {
+            xEndValue = chartPoint[chartPoint.length - 1][0]
         }
 
         // 指定图表的配置项和数据
-        option = {
-            title: {
-                text: '时间序列',
-            },
+        let option = {
+
+            color: ['rgb(101, 162, 233)'],
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -157,24 +206,24 @@
                 }
             },
             legend: {
-                data: ['数据值', '正确区间', '错误区间', '缺失区间']
+                data: index_page.legendData
             },
             toolbox: {
                 show: true,
+                left: 42,
                 feature: {
                     saveAsImage: {}
                 }
             },
             xAxis: {
-                //min: 0,
-                //max: 12,
                 type: 'value',
+                name: "时间",
                 boundaryGap: false,
             },
             yAxis: {
-                //min: 0,
-                //max: 100,
+                position: 'left',
                 type: 'value',
+                name: index_page.yAxisMeaning[dataset],
                 axisLabel: {
                     formatter: '{value}'
                 },
@@ -192,54 +241,87 @@
                 },
                 {
                     type: 'slider',
-                    //startValue: yStartValue,
-                    //endValue: yEndValue,
+                    left: 40,
                     yAxisIndex: 0,
                     filterMode: 'empty'
-                }/*,
-                {
-                    type: 'inside',
-                    xAxisIndex: 0,
-                    filterMode: 'empty'
-                },
-                {
-                    type: 'inside',
-                    yAxisIndex: 0,
-                    filterMode: 'empty'
-                }*/
+                }
             ],
+            visualMap: {
+                type: 'piecewise',
+                show: false,
+                dimension: 0,
+                pieces: linePieces
+            },
             series: [
                 {
                     name: '数据值',
                     type: 'line',
                     smooth: true,
-                    data: index_page.chartPoint,
+                    yAxisIndex: 0,
+                    symbolSize: 0,
+                    data: dataPoint,
                     markArea: {
                         data: mark_area
+                    },
+                    lineStyle: {
+                        normal: {
+                            color: 'rgb(101, 162, 233)',
+                            width: 3
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: 'rgb(101, 162, 233)',
+                            borderWidth: 0
+                        }
                     }
                 },
                 {
-                    name: "正确区间",
-                    type: "bar",
-                    data: [],
+                    type: 'line',
+                    smooth: true,
+                    yAxisIndex: 0,
+                    symbolSize: 0,
+                    name: "检测正常区段",
+                    data: normalPoint,
+                    lineStyle: {
+                        normal: {
+                            color: 'rgb(101, 162, 233)',
+                            width: 2
+                        }
+                    },
                     itemStyle: {
-                        normal: {color: 'rgba(144, 238, 144, 0.5)'}
+                        normal: {
+                            color: 'rgb(101, 162, 233)',
+                            borderWidth: 0
+                        }
                     }
                 },
                 {
-                    name: "错误区间",
-                    type: "bar",
-                    data: [],
+                    type: 'line',
+                    smooth: true,
+                    yAxisIndex: 0,
+                    symbolSize: 0,
+                    name: "检测异常区段",
+                    data: anomalyPoint,
+                    lineStyle: {
+                        normal: {
+                            color: 'rgb(233, 75, 17)',
+                            width: 2
+                        }
+                    },
                     itemStyle: {
-                        normal: {color: 'rgba(208, 238, 26, 0.5)'}
+                        normal: {
+                            color: 'rgb(233, 75, 17)',
+                            borderWidth: 0
+                        }
                     }
                 },
                 {
-                    name: "缺失区间",
+                    name: "原始异常区间",
                     type: "bar",
                     data: [],
                     itemStyle: {
-                        normal: {color: 'rgba(255, 133, 50, 0.5)'}
+                        normal: {color: 'rgba(255, 225, 22, 0.5)'}
                     }
                 }
             ]
@@ -247,38 +329,56 @@
 
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
-        //console.log(option.series[0].markArea.data)
+
     }
 
     $(function () {
         $("#smt_slt").click(function () {
-            $alg = index_page.alg_sel;
-            if ($alg === "") {
-                alert("请选择算法");
+            if (index_page.resLoading) {
+                index_page.$message.error("当前有模型正在预测中");
                 return;
             }
-            $data = index_page.data_sel;
-            if ($data === "") {
-                alert("请选择数据集");
+            let $model = index_page.model_sel[0];
+            if (typeof ($model) === "undefined") {
+                index_page.$message.error("请选择算法");
                 return;
             }
-            if (index_page.windows_sel.length == 0)
-            {
-                alert("请选择至少一个数据段");
+            let $data = index_page.data_sel[0];
+            let model_type = $.inArray($model, index_page.toSegList) >= 0;
+            if (typeof ($data) === "undefined") {
+                if (!model_type) {
+                    index_page.$message.error("请选择数据集");
+                    return;
+                }
+            }
+            if (index_page.file_sel.length === 0 && model_type) {
+                index_page.$message.error("请选择一个数据文件");
                 return;
             }
-            index_page.windows_sel.sort(function (a, b) {
-                return a - b;
-            });
-            console.log(index_page.windows_sel);
+            let $file = "";
+            if (index_page.file_sel[0] !== "original data") {
+                $file = index_page.file_sel[0];
+            }
+
+            if (model_type) {
+                index_page.legendData = ['数据值'];
+                $data = "ECG";
+            } else {
+                index_page.legendData = ['检测正常区段', '检测异常区段' ,'原始异常区间'];
+            }
+
+            // if ($data )
+            index_page.resLoading = true;
             $.ajax({
                 url: "/getdata",
                 type: "post",
                 traditional: true,
                 data: {
-                    algorithm: $alg,
+                    model_type: model_type,
+                    algorithm: $model,
                     dataset: $data,
-                    windows: index_page.windows_sel
+                    file: $file,
+                    window: index_page.window_sel
                 },
                 success: function (response) {
                     let result = JSON.parse(response);
@@ -286,10 +386,22 @@
                     index_page.chartPoint = result.data_set;
                     index_page.originalAnomaly = result.original_anomaly;
                     index_page.detectedAnomaly = result.detected_anomaly;
-                    ret_alg = $alg;
-                    ret_data = $data;
-                    index_page.ret_val = "算法为" + ret_alg + "，数据集为" + ret_data;
-                    setCharts();
+
+                    index_page.tableData[0].model = $model;
+                    index_page.tableData[0].dataset = $data;
+                    index_page.tableData[0].stdrate = index_page.stdRate[$model];
+                    index_page.stdRes = result.original_value;
+                    index_page.curRes = result.res_value;
+                    if (model_type) {
+                        index_page.TSITimes++;
+                        index_page.TSISuccess += (result.original_value === result.res_value);
+                        index_page.tableData[0].currate = (index_page.TSISuccess * 100.0 / index_page.TSITimes).toFixed(2).toString() + "%";
+                    } else {
+                        index_page.tableData[0].currate = result.auc.toFixed(3);
+                    }
+                    setCharts(model_type, $data, result.data_set, result.original_anomaly, result.detect_res);
+                    index_page.resLoading = false;
+                    index_page.showInfo("res");
                 }
             });
         })
@@ -301,48 +413,134 @@
         delimiters: ['[[', ']]'],
         el: "#index_page",
         data: {
-            window_series: [],
-            alg_sel: "",
-            data_sel: "",
-            ret_val: "暂未选择数据集和算法",
-            windows_sel: [],
+            // Aside variables
+            datasetShow: false,
+            fileShow: false,
+            sectionShow: false,
+            windowLoading: false,
+            maxWindowNum: 0,
+            window_sel: 0,
+            file_series: ["dataA", "dataB"],
+            file_sel: [],
+            model_sel: [],
+            data_sel: [],
+            modelList: ["TSI_CNN", "LSTM", "GRU"],
+            datasetList: ["respiration", "power_demand"],
+            toSegList: ["TSI_CNN"],
+            // anomalyThreshold: 10,
+
+            infoShow: {
+                'welcome': true,
+                'res': false,
+                'TSI_CNN': false,
+                'LSTM': false,
+                'GRU': false,
+            },
+            resLoading: false,
+
+            TSITimes: 0,
+            TSISuccess: 0,
+            stdRate: {
+                'TSI_CNN': "85.00%",
+                'LSTM': "0.660",
+                'GRU': "0.680",
+            },
+            stdRes: 0,
+            curRes: 0,
+            col3Name: "",
+            col4Name: "",
+            tableData: [{
+                model: "TSI_CNN",
+                dataset: "ECG",
+                stdrate: "80%",
+                currate: "90%",
+                stdres: "",
+                curres: ""
+            }],
+            legendData: ['数据值'],
+            yAxisMeaning: {
+                'ECG': "心电图值",
+                'respiration': '呼吸',
+                'power_demand': '能源需求量'
+            },
             chartPoint: [],
+            anomalyScore: [],
             originalAnomaly: [],
             detectedAnomaly: []
         },
         methods: {
+            showInfo: function (str) {
+                for (let item in this.infoShow) {
+                    this.infoShow[item] = (item === str);
+                }
+            },
+            loadForm: function () {
+                this.sectionShow = false;
+                if (this.model_sel.length === 0) {
+                    this.showInfo("welcome");
+                    this.datasetShow = false;
+                    this.fileShow = false;
+                } else {
+                    this.showInfo(this.model_sel[0]);
+                    if ($.inArray(this.model_sel[0], this.toSegList) >= 0) {
+                        this.searchFiles();
+                        this.datasetShow = false;
+                        this.fileShow = true;
+                    } else {
+                        this.datasetShow = true;
+                        this.fileShow = false;
+                    }
+                }
+            },
+            executeUpload: function () {
+                document.getElementById("smt_file").click();
+            },
+            judgeType: function (file) {
+                let exName = file.name.substring(file.name.lastIndexOf('.') + 1);
+                if (exName !== "csv") {
+                    this.$message.error("只能上传csv格式的文件");
+                }
+                return exName === "csv"
+            },
+            searchFiles: function () {
+                $.ajax({
+                    url: "/getfiles",
+                    type: "post",
+                    success: function (response) {
+                        index_page.file_series = JSON.parse(response);
+                    }
+                });
+            },
+            refreshFile: function (response) {
+                console.log(response);
+                this.searchFiles();
+                this.$message({
+                    message: "上传成功",
+                    type: "success"
+                });
+            },
             loadWindows: function () {
-                //alert(this.data_sel);
+                if (index_page.file_sel.length === 0) {
+                    index_page.sectionShow = false;
+                    return;
+                }
+                index_page.windowLoading = true;
+                index_page.window_sel = 0;
+                let fileName = "";
+                if (index_page.file_sel[0] !== "original data") {
+                    fileName = index_page.file_sel[0];
+                }
                 $.ajax({
                     url: "/getwindows",
                     type: "post",
                     data: {
-                        data_set: index_page.data_sel,
+                        file: fileName
                     },
                     success: function (response) {
                         let result = JSON.parse(response);
-                        console.log(result);
-                        while (index_page.window_series.length > 0)
-                        {
-                            index_page.window_series.shift();
-                        }
-                        while (index_page.windows_sel.length > 0)
-                        {
-                            index_page.windows_sel.shift();
-                        }
-                        for (var i = 0; i < (result.data_size / result.window_size); i++)
-                        {
-                            let sp = 1 + result.window_size * i;
-                            let ep = sp + result.window_size;
-                            if (ep > result.data_size) {
-                                ep = result.data_size;
-                            }
-                            index_page.window_series.push({
-                                start: "[" + sp.toString(),
-                                end: ep.toString() + "]"
-                            });
-                        }
-                        console.log(index_page.window_series);
+                        index_page.maxWindowNum = Math.floor(result.data_size / result.window_size) - 1;
+                        index_page.sectionShow = true;
+                        index_page.windowLoading = false;
                     }
                 });
             }
@@ -351,15 +549,64 @@
 </script>
 <style>
 
-    header .el-header
+    .el-header
     {
-        height: 100px;
+        position: relative;
+        width: 100%;
+        height: 90px;
+    }
+
+    .el-aside
+    {
+        display: block;
+        position: absolute;
+        left: 35px;
+        top: 105px;
+        bottom: 0;
+    }
+
+    .el-divider--vertical
+    {
+        display: inline-block;
+        width: 1px;
+        height: 617px;
+        vertical-align: middle;
+        position: absolute;
+        margin: 35px 8px 0 326px;
+    }
+
+    .el-main
+    {
+        position: absolute;
+        left: 330px;
+        right: 0;
+        top: 105px;
+        bottom: 0;
+        margin-left: 1px;
+        padding: 0 0 0 25px;
+    }
+
+    .aside-area
+    {
+        background-color: #789dbc;
+    }
+
+    .page-component__scroll
+    {
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+    }
+
+    .el-scrollbar__wrap
+    {
+        overflow-x: hidden;
     }
 
     .el-header > .el-menu > .el-menu-item
     {
-        height: 100px;
-        padding-top: 40px;
+        height: 90px;
+        padding-top: 30px;
     }
 
     .el-header > .el-menu > .el-menu-item > span
@@ -371,7 +618,7 @@
 
     .el-menu-vertical-demo
     {
-        height: 700px;
+        height: 200px;
         /*background-color: rgb(200, 245, 221);*/
     }
 
@@ -392,13 +639,37 @@
         padding-bottom: 9px;
     }
 
+    .el-collapse-item__content
+    {
+        padding-bottom: 8px;
+    }
+
+    .aside-divider
+    {
+        margin: 0 0 0 0;
+    }
+
+    .el-collapse-item__content
+    {
+        /*padding-bottom: 3px;*/
+    }
+
     #smt_slt
     {
         width: 100%;
         height: 50px;
-        margin-top: 30px;
+        margin-top: 20px;
+        margin-bottom: 15px;
         text-align: center;
         font-size: 18px;
+    }
+
+    .dis_img
+    {
+        width: 885px;
+        height: 470px;
+        margin-top: 60px;
+        margin-left: 150px;
     }
 
 </style>
