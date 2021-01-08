@@ -75,29 +75,25 @@ The project provides a total of three models, including TSI-CNN and RNN models, 
 
 ### 3.2 Systematic General Process
 
-
+<img src="/img/process.png" alt="process" style="zoom: 50%;" />
 
 ### 3.3 Requirements Analysis
 
-#### Select Solver Use Case
-
-
-
 #### Select Data Use Case
 
-
+<img src="/img/3.3.1.png" alt="3.3.1" style="zoom:67%;" />
 
 #### Execute Algorithm Use Case
 
-
+<img src="/img/3.3.2.png" alt="3.3.2" style="zoom: 67%;" />
 
 #### View Results Use Case
 
-
+<img src="/img/3.3.3.png" alt="3.3.3" style="zoom:67%;" />
 
 #### Upload Dataset Use Case
 
-
+<img src="/img/3.3.4.png" alt="3.3.4" style="zoom:67%;" />
 
 ## 4 Nonfunctional Requirements
 
