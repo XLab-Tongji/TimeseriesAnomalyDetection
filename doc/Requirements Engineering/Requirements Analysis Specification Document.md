@@ -1,2 +1,0 @@
-# Requirements Analysis Specification Document
-
