@@ -31,7 +31,7 @@ The target users of this program are health care providers who monitor medical a
 
 ## Use Case Analysis
 
-![useCase](img/useCase.png)
+![Screen Shot 2021-01-08 at 11.10.19](img/useCase.png)
 
 | **Use Case 1: Select Solver**                                |
 | ------------------------------------------------------------ |
