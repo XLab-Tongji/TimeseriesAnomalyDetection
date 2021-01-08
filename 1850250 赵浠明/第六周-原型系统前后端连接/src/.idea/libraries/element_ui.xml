@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="element-ui" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://D:/../Com_Project/citiFore-endGroup/node_modules/_element-ui@2.14.0@element-ui" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://D:/Com_Project/citiFore-endGroup/node_modules/_element-ui@2.14.0@element-ui" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>
