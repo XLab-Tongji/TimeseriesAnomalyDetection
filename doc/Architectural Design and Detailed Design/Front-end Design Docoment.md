@@ -103,17 +103,17 @@ According to the content model and the interaction model designed above, we desi
 
     *   If there is something missing, there will be an error message shown.
 
-     ![](img/submit_missing.png)
+        ![](img/submit_missing.png)
 
     *   If not, the message including all selection will send to the back-end part. And after receiving the response, the system will show the statistics as table and show the data and result as chart. 
 
         *   If the model selected is named “TSI_CNN”, the table data will include model name, dataset name, predicted success rate, real success rate, real result and predicted result and the chart data will include original data only.
 
-             ![](img/TSI_CNN_result.png)
+            ![](img/TSI_CNN_result.png)
 
         *   If not, the table data will include model name, dataset name, predicted AUC value, real AUC value and the chart data will include original data, original anomaly ranks, predicted normal sections and predicted anomaly sections.
 
-             ![](img/LSTM_result.png)
+            ![](img/LSTM_result.png)
 
 *   If wanting to make another prediction, the user will have to wait until current prediction finishes. If not, when the submit button is clicked, there will be an error message shown to inform that.
 
