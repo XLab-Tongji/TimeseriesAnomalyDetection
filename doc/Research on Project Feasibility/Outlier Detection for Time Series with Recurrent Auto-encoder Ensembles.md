@@ -18,25 +18,25 @@ However, autoencoder ensembles are only available for non-sequential data, and t
 
 The following figure shows the basic, independent framework of an S-RNN autoencoder ensemble. The ensemble contains N S-RNN autoencoders that each consists of an encoder E~i~ and a decoder D~i~, 1 ≤ i ≤ N. Further, each autoencoder has its distinct sparseness weight vectors.
 
-![](img/IF.png)
+![](img/yyc/IF.png)
 
 Each autoencoder in the ensemble is trained independently by minimizing the objective function Ji that measures the difference between the input vectors in the original time series and the reconstructed vectors.
 
-<img src="img/IF_Formula.png" style="zoom:67%;" />
+<img src="img/yyc/IF_Formula.png" style="zoom:67%;" />
 
 ###### 2.2.2 Shared Framework (SF)
 
 The independent framework trains different autoencoders independently, meaning that different autoencoders do not interact during the training phase. However, since all autoencoders try to reconstruct the same, original time series, it is relevant to enable interactions among the autoencoders. So there is a shared framework which incorporates interactions among different autoencoders proposed in the paper. In the framework, given N tasks where each task reconstructs the original time series, and the N tasks are designed to interact through a shared layer. The structure of the shared framework is shown in the following figure.
 
-![](img/SF.png)
+![](img/yyc/SF.png)
 
 The shared layer **h**~C~^(E)^ uses linear weight matrices  **W**^(E)^ to concatenate the linear combinations of all the last hidden states of all the encoders.
 
-<img src="img/SF_HC.png" style="zoom:67%;" />
+<img src="img/yyc/SF_HC.png" style="zoom:67%;" />
 
 Each decoder D~i~ employs the concatenated hidden states **h**~C~^(E)^ as the initial hidden state when reconstructing time series. In the shared framework, all autoencoders are trained jointly by minimizing the objective function J that sums up the reconstruction errors of all autoencoders and an L1 regularization term on the shared hidden state.
 
-<img src="img/SF_Formula.png" style="zoom:65%;" />
+<img src="img/yyc/SF_Formula.png" style="zoom:65%;" />
 
 In the formula above, λ is a weight that controls the importance of the L1 regularization  ||**h**~C~^(E)^||~1~. The L1 regularization has the effect of making the shared hidden state **h**~C~^(E)^ sparse. This avoids cases where some encoders overfit to the original time series and helps make the decoders robust and less affected by outliers. Hence, when autoencoders meet outliers, the difference between original time series and reconstructed time series is more pronounced.
 
