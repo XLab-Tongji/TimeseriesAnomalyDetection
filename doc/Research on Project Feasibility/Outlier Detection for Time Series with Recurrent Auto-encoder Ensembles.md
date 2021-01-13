@@ -1,5 +1,7 @@
 # Outlier Detection for Time Series with Recurrent Auto-encoder Ensembles
 
+[toc]
+
 ### 1. Introduction
 
 The paper proposes two solutions to outlier detection in time series based on recurrent autoencoder ensembles. The two solutions are ensemble frameworks, specifically an independent framework and a shared framework, both of which combine multiple S-RNN based autoencoders to enable outlier detection. This ensemble-based approach aims to reduce the effects of some autoencoders being overfitted to outliers, this way improving overall detection quality.

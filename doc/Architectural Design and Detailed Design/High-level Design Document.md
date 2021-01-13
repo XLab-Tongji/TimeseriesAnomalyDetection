@@ -1,5 +1,7 @@
 # High-level Design Document
 
+[toc]
+
 ## Architecture Design
 
 When considering the product architecture, a detailed three-level hierarchy is adopted, which divides the entire business into: Presentation layer, Business Logic Layer and Data access layer. The idea of "divide and conquer" is adopted to divide the problem into individual solutions, which is easy to control, extend and allocate resources.

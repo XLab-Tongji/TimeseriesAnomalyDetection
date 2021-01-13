@@ -1,5 +1,7 @@
 # Front-end using manual
 
+[toc]
+
 ### 1. Front-end file structure
 
 Project group uses Django 3.1.3 based on Python 3 to build the basic architecture of the front-end part. And  some frameworks such as Vue, Element UI and jQuery are used to optimize and assist the design of page style and logic of the front-end page. In this project, we do not use the pattern where front-end and back-end are completely separated, and the back-end codes are surrounded with the front-end part. File structure of the project is shown as below.

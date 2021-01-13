@@ -1,5 +1,7 @@
 # Requirements Specification Document
 
+[toc]
+
 ## Project scope
 
 ### Background

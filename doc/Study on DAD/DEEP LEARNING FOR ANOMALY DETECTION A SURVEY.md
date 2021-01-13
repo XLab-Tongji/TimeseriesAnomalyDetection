@@ -1,5 +1,7 @@
 # DEEP LEARNING FOR ANOMALY DETECTION: A SURVEY
 
+[toc]
+
 ### 1. Basic Definition of Anomaly Detection
 
 ##### 1.1 Anomaly and Anomaly Detection
