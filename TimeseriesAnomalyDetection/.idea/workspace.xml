@@ -174,11 +174,11 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Django server.TimeseriesAnomalyDetection" />
       <item itemvalue="JavaScript Debug.evaluate.py" />
+      <item itemvalue="Python.evaluate (1)" />
       <item itemvalue="Python.evaluate" />
       <item itemvalue="Python.print_data" />
-      <item itemvalue="Python.evaluate (1)" />
+      <item itemvalue="Django server.TimeseriesAnomalyDetection" />
     </list>
     <recent_temporary>
       <list>
@@ -305,30 +305,30 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="1017" y="215" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1607954735506" />
-    <state width="1493" height="219" key="GridCell.Tab.0.bottom" timestamp="1610103683658">
+    <state width="1493" height="219" key="GridCell.Tab.0.bottom" timestamp="1610538217087">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="2005" height="410" key="GridCell.Tab.0.bottom/0.0.1536.824/-2560.0.2048.1112@-2560.0.2048.1112" timestamp="1607841366556" />
     <state width="1142" height="290" key="GridCell.Tab.0.bottom/0.0.1536.824/-2560.0.2048.1112@0.0.1536.824" timestamp="1607055994290" />
-    <state width="1493" height="219" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1610103683658" />
-    <state width="1493" height="219" key="GridCell.Tab.0.center" timestamp="1610103683658">
+    <state width="1493" height="219" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1610538217087" />
+    <state width="1493" height="219" key="GridCell.Tab.0.center" timestamp="1610538217087">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="2005" height="410" key="GridCell.Tab.0.center/0.0.1536.824/-2560.0.2048.1112@-2560.0.2048.1112" timestamp="1607841366556" />
     <state width="1142" height="290" key="GridCell.Tab.0.center/0.0.1536.824/-2560.0.2048.1112@0.0.1536.824" timestamp="1607055994290" />
-    <state width="1493" height="219" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1610103683658" />
-    <state width="1493" height="219" key="GridCell.Tab.0.left" timestamp="1610103683658">
+    <state width="1493" height="219" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1610538217087" />
+    <state width="1493" height="219" key="GridCell.Tab.0.left" timestamp="1610538217087">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="2005" height="410" key="GridCell.Tab.0.left/0.0.1536.824/-2560.0.2048.1112@-2560.0.2048.1112" timestamp="1607841366556" />
     <state width="1142" height="290" key="GridCell.Tab.0.left/0.0.1536.824/-2560.0.2048.1112@0.0.1536.824" timestamp="1607055994290" />
-    <state width="1493" height="219" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1610103683658" />
-    <state width="1493" height="219" key="GridCell.Tab.0.right" timestamp="1610103683658">
+    <state width="1493" height="219" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1610538217087" />
+    <state width="1493" height="219" key="GridCell.Tab.0.right" timestamp="1610538217087">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="2005" height="410" key="GridCell.Tab.0.right/0.0.1536.824/-2560.0.2048.1112@-2560.0.2048.1112" timestamp="1607841366556" />
     <state width="1142" height="290" key="GridCell.Tab.0.right/0.0.1536.824/-2560.0.2048.1112@0.0.1536.824" timestamp="1607055994290" />
-    <state width="1493" height="219" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1610103683658" />
+    <state width="1493" height="219" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1610538217087" />
     <state width="2005" height="410" key="GridCell.Tab.1.bottom" timestamp="1607841366556">
       <screen x="-2560" y="0" width="2048" height="1112" />
     </state>
