@@ -94,3 +94,4 @@ AUC stands for "Area under the ROC Curve." That is, AUC measures the entire two-
 Model performance was evaluated by comparing the model output with the pre-labeled ground-truth. Note that the labels are only used for model evaluation. The anomaly score threshold was subjective.
 
 ## Class Design
+
